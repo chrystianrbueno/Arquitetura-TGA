@@ -1,35 +1,40 @@
-`timescale 1ns / 1ps
-
 module testbench();
   
-  reg a, b;
-  wire y;
-  and_gate and1(a, b, y);
+  reg [7:0] a, b;
+  wire [7:0] y;
+  and_gate_8bit ag8(a, b, y);
   
   initial begin
-    a = 1'b1;
-    b = 1'b1;
+    
+    a = 8'b10101010;
+    b = 8'b00000000;
     $display("a=%b b=%b", a, b);
     #1
     $display("cout=%b", y);
     
-    a = 0'b1;
-    b = 0'b1;
+    a = 8'b00000000;
+    b = 8'b00000000;
     $display("a=%b b=%b", a, b);
     #1
     $display("cout=%b", y);
     
-    a = 0'b1;
-    b = 1'b1;
+    a = 8'b10101010;
+    b = 8'b10101010;
     $display("a=%b b=%b", a, b);
     #1
     $display("cout=%b", y);
     
-    a = 1'b1;
-    b = 0'b1;
+    a = 8'b11111111;
+    b = 8'b11111111;
     $display("a=%b b=%b", a, b);
     #1
     $display("cout=%b", y);
+    
+    a = 8'b10101010;
+    b = 8'b01010101;
+    $display("a=%b b=%b", a, b);
+    #1
+    $display("cout=%b", y);
+    
   end
-  
 endmodule
