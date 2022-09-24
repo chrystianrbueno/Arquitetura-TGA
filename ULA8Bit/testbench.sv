@@ -2,9 +2,10 @@ module ula8bit ();
   reg [7:0] a, b;
   reg [3:0] mode;
   wire [7:0] result;
+  wire [1:0] y, z;
 
   ula ula(a, b, mode, result);
-  
+
   initial begin
     $dumpfile("dump.vcd");
     $dumpvars(1);
@@ -64,5 +65,17 @@ module ula8bit ();
     $display("%b OR %b = %b", a, b, result);
     a = 8'b10101010; b = 8'b01010101; #10
     $display("%b OR %b = %b", a, b, result);
+
+    
+    $display("INVERTER A");
+    mode = 3'b100;
+    a = 8'b00000000; #10
+    $display("%b = %b", a, result);
+    a = 8'b11111111; #10
+    $display("%b = %b", a, result);
+    a = 8'b10101101; #10
+    $display("%b = %b", a, result);
+    a = 8'b11010110; #10
+    $display("%b = %b", a, result);
   end
 endmodule

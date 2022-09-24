@@ -1,27 +1,21 @@
 module mio_somador_testbench();
-	reg  cin, a, b;
-	wire y, z;
+	reg [7:0] a;
+	wire 7:0] result;
  
-	inverter dut(cin, a, b,  y, z,);
+    inverter1bit dut(a, result);
  
-	initial
-		begin
+    initial begin
            
           
-          cin = 1'b1; a = 1'b0; b = 1'b0; #1;
-          $display(y,z);
-          
-          
-          cin = 1'b1; a = 1'b1; b = 1'b0; #1;
-          $display(y,z);
-          
-          
-          cin = 1'b0; a = 1'b0; b = 1'b1; #1;
-          $display(y,z);
-          
-
-          cin = 1'b0; a = 1'b0; b = 1'b0; #1;
-          $display(y,z);
+    $display("INVERTER A");
+    a = 8'b00000000; #10
+    $display("%b = %b", a, result);
+    a = 8'b11111111; #10
+    $display("%b = %b", a, result);
+    a = 8'b10101101; #10
+    $display("%b = %b", a, result);
+    a = 8'b11010110; #10
+    $display("%b = %b", a, result);
           
     
   end

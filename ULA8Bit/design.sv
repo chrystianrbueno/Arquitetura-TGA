@@ -84,26 +84,39 @@ module and_gate_8bit (input [7:0] a, b,
   and_gate_4bit ag2 (a[7:4], b[7:4], cout[7:4]);
 endmodule
 
-module inverter (cin, a, b, y, z,);
- input cin, a, b;
- output y, z;
+module inverter1bit (input a,
+                     output y);
   
-  assign y = cin ^ a;
-  assign z = ~cin ^ b;
+  assign y = ~a;
+  
+endmodule
+
+
+module inverter_8bit (input [7:0] a,
+                      output [7:0] y);
+  inverter1bit ag1(a[0], y[0]);
+  inverter1bit ag2(a[1], y[1]);
+  inverter1bit ag3(a[2], y[2]);
+  inverter1bit ag4(a[3], y[3]);
+  inverter1bit ag5(a[4], y[4]);
+  inverter1bit ag6(a[5], y[5]);
+  inverter1bit ag7(a[6], y[6]);
+  inverter1bit ag8(a[7], y[7]);
   
 endmodule
 
 module ula (a, b, s, out);
   input [7:0] a, b;
   output reg [7:0] out;
-  wire [7:0] adder_output, subt_output, and_output, or_output, inv_out;
+  wire [7:0] adder_output, subt_output, and_output, or_output, invAA, invBB, inverter_outputA, inverter_outputB;
   input [3:0] s;
   wire cout;
   
   full_adder_subtrator sum (a, b, 0, adder_output, cout);
   full_adder_subtrator sub (a, b, 1, subt_output, cout);
   and_gate_8bit ag8(a, b, and_output);
-  or_gate_8bit og4(a, b,or_output);
+  or_gate_8bit og8(a, b, or_output);
+  inverter_8bit invA (a, inverter_outputA);
 
   always @(a or b or s)
     begin
@@ -122,6 +135,10 @@ module ula (a, b, s, out);
       else if (s == 3'b011)
         begin
           assign out = or_output;
+        end
+      else if (s == 3'b100)
+        begin
+          assign out = inverter_outputA;
         end
       else
         begin
