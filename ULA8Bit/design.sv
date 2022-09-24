@@ -108,7 +108,7 @@ endmodule
 module ula (a, b, s, out);
   input [7:0] a, b;
   output reg [7:0] out;
-  wire [7:0] adder_output, subt_output, and_output, or_output, invAA, invBB, inverter_outputA, inverter_outputB;
+  wire [7:0] adder_output, subt_output, and_output, or_output, inverter_outputA;
   input [3:0] s;
   wire cout;
   
