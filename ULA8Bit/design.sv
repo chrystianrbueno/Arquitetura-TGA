@@ -92,3 +92,40 @@ module inverter (cin, a, b, y, z,);
   assign z = ~cin ^ b;
   
 endmodule
+
+module ula (a, b, s, out);
+  input [7:0] a, b;
+  output reg [7:0] out;
+  wire [7:0] adder_output, subt_output, and_output, or_output, inv_out;
+  input [3:0] s;
+  wire cout;
+  
+  full_adder_subtrator sum (a, b, 0, adder_output, cout);
+  full_adder_subtrator sub (a, b, 1, subt_output, cout);
+  and_gate_8bit ag8(a, b, and_output);
+  or_gate_8bit og4(a, b,or_output);
+
+  always @(a or b or s)
+    begin
+      if (s == 3'b000)
+        begin
+          assign out = adder_output;
+        end
+      else if (s == 3'b001)
+        begin
+          assign out = subt_output;
+        end
+      else if (s == 3'b010)
+        begin
+          assign out = and_output;
+        end
+      else if (s == 3'b011)
+        begin
+          assign out = or_output;
+        end
+      else
+        begin
+          assign out = 8'b0;
+        end
+    end
+endmodule
